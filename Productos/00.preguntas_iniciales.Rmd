@@ -1,0 +1,16 @@
+---
+title: "Preguntas Iniciales"
+author: "Mariella Tognarelli"
+date: "10/12/2021"
+output: pdf_document
+---
+
+1) ¿Quién es el autor que más best seller tiene en el top 10.000?
+
+2) ¿Cuál es el género más repetitivo en el top 100 best-seller?
+
+3) En los años 2000-2021, ¿Cuál fue el género con más publicaciones por año?
+
+4) ¿Cuál ha sido el/los autor(res) con más publicaciones por año?
+
+5) ¿Cuál es el título más largo (con más caracteres) de los top seller?
