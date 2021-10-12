@@ -4,6 +4,7 @@ author: "Mariella Tognarelli"
 date: "10/12/2021"
 output: pdf_document
 ---
+# Preguntas 
 
 1) ¿Quién es el autor que más best seller tiene en el top 10.000?
 
