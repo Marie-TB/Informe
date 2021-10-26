@@ -1,2 +1,2 @@
 dataset.csv filter=lfs diff=lfs merge=lfs -text
-dataset.psd filter=lfs diff=lfs merge=lfs -text
+*.csv filter=lfs diff=lfs merge=lfs -text
