@@ -1,0 +1,97 @@
+---
+title: "Actividad 11"
+author: "Mariella Tognarelli"
+date: "09/7/2021"
+output: html_document
+---
+Todas las personas tenemos gustos distintos, ya sean en comidas, colores, estilos musicales, etc. Y cuando hay una tendencia, se generan ciertas preferencias que nos brindan información de utilidad. Por este motivo, se analizará los 11 autores más repetidos en las ventas de libros en  el años 2021.
+Para ello se utilizaron las siguientes bases de datos y librerías:
+```{r, warning=FALSE, message=FALSE}
+setwd("..")
+#cargar datos
+datos <- load("Datos/Datos_Filtados.Rdata")
+Autores <- rio::import("Datos/authors.csv")
+Categorias <- rio::import("Datos/categories.csv")
+
+# Librerías
+require(tidyverse)
+
+```
+
+Para comenzar nuestro analisis de la base de datos, se han dejado sólo los primeros 10.000 top-seller del mes de Septiembre de la página BookDepository. 
+Posteriormente, dado a que las entradas de los autores por libro era un string, se empleó el siguiente código para eliminar los corchetes por fila y, además, que cada objeto mencionado posterior a una coma "," , sea puesto en una lista para poder recorrer cada conjunto de ID's por medio de la función for.
+```{r}
+autor <- c()
+for (i in 1:length(datos3$authors)) {
+  p = datos3[i,1] %>% stringr::str_sub( start = 2L, end = -2L) %>%
+    stringr::str_remove_all(" ") %>%
+    stringr::str_split(",")
+  autor = c(autor, p)
+}
+```
+Una vez hecho esto, podremos reemplazar los ID's correspondientes de los autores.
+Para ello se empleó el siguiente código que se encarga de recorrer cada lista creada por entrada y buscar el valor correspondiente en la base de datos guardada como "Autores", con la finalidad de crear un nuevo vector con los mismos ID's de la columna authors, reemplazado con los respectivos nombres.
+En caso de que no se encuentre un ID, se guardará como "Anonimo"
+```{r , cache=TRUE}
+#### Cambio de ID por Nombres
+autores <- c()
+autores_crudo <-c() 
+for (i in autor){
+  aux = unlist(i) 
+  if (length(aux) > 1){
+    nombres = ""
+    contador = 0
+    for (j in aux){
+      posicion = which(j == Autores$author_id)
+      if (contador != 0){
+        nombres = paste(nombres, Autores$author_name[posicion], sep = "; ")
+      }
+      else {
+        nombres = Autores$author_name[posicion]
+        contador = 1
+      }
+      
+      autores_crudo = c(autores_crudo, Autores$author_name[posicion])
+      
+    }
+  }
+  else if (aux == "") {
+    nombres = "Anonimo"
+    autores_crudo = c(autores_crudo, nombres)
+  }
+  else {
+    posicion = which(i == Autores$author_id)
+    nombres = Autores$author_name[posicion]
+    autores_crudo = c(autores_crudo, Autores$author_name[posicion])
+    
+  }
+  autores = c(autores, nombres)
+}
+
+```
+Una función extra que posee este código es que se ha establecido contadores por nombres, es decir, se llevará un registro en el vector "autores_crudo" de la cantidad de veces que se repiten algunos autores en el rango de los 10.000 top seller. 
+Por último, para poder graficar el histograma, por medio de ggplot, con los 11 autores con más top-seller; se convirtieron los vectores creados en data frame.
+```{r, cache=TRUE}
+###Dataframe
+
+contador_Autores <- plyr::count(autores_crudo)
+data_frame <- as.data.frame(autores_crudo) %>% 
+  mutate(freq = NA)
+for (i in 1:length(data_frame$autores_crudo)){
+  posicion = which(data_frame$autores_crudo[i] == contador_Autores$x)
+  data_frame$freq[i] = contador_Autores$freq[posicion]
+}
+
+```
+Ahora, luego de esta necesaria limpieza y transformación de la columna authors, podemos graficar:
+```{r, fig.height=8, fig.width=17}
+###Histograma
+data_frame %>%
+  filter(freq > 30) %>%
+  ggplot(aes(autores_crudo))  +
+  geom_bar(fill="thistle", col = "gray40") +
+  labs(x = "Autores", y = "Frecuencia", title = "Los 11 Autores más nombrados entre los 10.000 Top-Seller") +
+  ggthemes::theme_base()
+```
+
+Como podemos notar, lidera en las ventas la autora Julia Donaldson, seguida de J.K. Rowling, autora famosa por su saga juvenil de fantasía "Harry Potter" con sus múltiples ediciones especiales por aniversarios. También podemos apreciar que hay una cantidad considerable de libros sin autores, los cuales debemos de analizar detenidamente más adelante, para determinar si realmente son libros sin autores especificados como La Santa Biblia o son datos que no se pudieron recopilar.
