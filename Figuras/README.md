@@ -1,6 +1,3 @@
-# Figuras
-
-En esta carpeta estarán las figuras.
-
-
-P.S. Profesora, no tengo ni idea a que se refiere con esta carpeta y tampoco encontré el "que se espera como entrega" que dijo que subiría de ejemplo :(
+version https://git-lfs.github.com/spec/v1
+oid sha256:985b3dfa5b22230561930836d54c2dc13a1b83cf59979f3aa57f31d544c7e3ef
+size 205

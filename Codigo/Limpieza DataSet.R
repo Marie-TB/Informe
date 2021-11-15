@@ -1,19 +1,3 @@
-
-# Librerías ---------------------------------------------------------------
-
-require(tidyverse)
-
-# Cargar Base de Datos ----------------------------------------------------
-
-datos <- read_delim("Datos/dataset.csv")
-generos <- read_delim("Datos/categories.csv")
-autores <- read_delim("Datos/authors.csv")
-
-# Conservar primeros 10.000 en el rank de bestseller -------------------------------
-
-
-datos2 <- datos[(datos$`bestsellers-rank` < 10000),]
-datos3 <- datos2[!is.na(datos2$`bestsellers-rank`),]
-
-
-save(datos3, file="Datos/Datos_Filtados.Rdata")
+version https://git-lfs.github.com/spec/v1
+oid sha256:49deafc3834c9adcd6c9f89fbb4de495d0dbe43c4d61e5c294c0be36210eade2
+size 550

@@ -1,2 +1,17 @@
 dataset.csv filter=lfs diff=lfs merge=lfs -text
 dataset.psd filter=lfs diff=lfs merge=lfs -text
+*.Rhistory filter=lfs diff=lfs merge=lfs -text
+*.gitignore filter=lfs diff=lfs merge=lfs -text
+*.R filter=lfs diff=lfs merge=lfs -text
+*.md filter=lfs diff=lfs merge=lfs -text
+*.Rdata filter=lfs diff=lfs merge=lfs -text
+*.csv filter=lfs diff=lfs merge=lfs -text
+*.png filter=lfs diff=lfs merge=lfs -text
+*.Rproj filter=lfs diff=lfs merge=lfs -text
+*.Rmd filter=lfs diff=lfs merge=lfs -text
+*.html filter=lfs diff=lfs merge=lfs -text
+/Productos/actividad11_cache/html/__packages filter=lfs diff=lfs merge=lfs -text
+*.RData filter=lfs diff=lfs merge=lfs -text
+*.rdb filter=lfs diff=lfs merge=lfs -text
+*.rdx filter=lfs diff=lfs merge=lfs -text
+*.yml filter=lfs diff=lfs merge=lfs -text
